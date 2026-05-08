@@ -1,0 +1,54 @@
+# ==============================================================================
+# PERCEPTIOSPHERE (P-Sphere) SYSTEM FIREWALL
+# Goal: Track the Protocol (Logic) and Structure, Ignore the Data (Context).
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. OS & IDE CLEANUP
+# ------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+
+# ------------------------------------------------------------------------------
+# 2. OBSIDIAN SYSTEM FILES
+# ------------------------------------------------------------------------------
+# We ignore the workspace and cache but keep core configuration in 00_Protocol
+.obsidian/workspace.json
+.obsidian/graph.json
+.obsidian/appearance.json
+.obsidian/core-plugins.json
+
+# ------------------------------------------------------------------------------
+# 3. THE "STRUCTURE ONLY" RULE
+# Ignore all content in data folders by default.
+# ------------------------------------------------------------------------------
+01_Inflow/**/*
+02_Sandbox/**/*
+03_Curated/**/*
+04_Ecosystem/**/*
+05_Artifacts/**/*
+06_Efforts/**/*
+
+# ------------------------------------------------------------------------------
+# 4. WHITELIST: WHAT WE ACTUALLY TRACK
+# ------------------------------------------------------------------------------
+
+# Allow the folder structure to be committed via .keep files
+!**/
+!**/.keep
+
+# Track the entire Protocol engine (Prompts, Schemas, Templates)
+!00_Protocol/
+!00_Protocol/**/*
+
+# ------------------------------------------------------------------------------
+# 5. AGENT & HARDWARE LOCAL CONFIG
+# ------------------------------------------------------------------------------
+# Keep the template manifest, but ignore local overrides or secrets
+opencode.json
+.env
+local_config.yaml
