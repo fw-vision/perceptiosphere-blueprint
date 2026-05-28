@@ -16,22 +16,23 @@ Thumbs.db
 # ------------------------------------------------------------------------------
 # 2. OBSIDIAN SYSTEM FILES
 # ------------------------------------------------------------------------------
-# We ignore the workspace and cache but keep core configuration in 00_Protocol
+# Ignore workspace and cache — these are local to each machine
 .obsidian/workspace.json
 .obsidian/graph.json
 .obsidian/appearance.json
 .obsidian/core-plugins.json
+.obsidian/cache/
 
 # ------------------------------------------------------------------------------
 # 3. THE "STRUCTURE ONLY" RULE
 # Ignore all content in data folders by default.
+# These folders hold YOUR knowledge — they are never shared via Git.
 # ------------------------------------------------------------------------------
-01_Inflow/**/*
-02_Sandbox/**/*
-03_Curated/**/*
-04_Ecosystem/**/*
-05_Artifacts/**/*
-06_Efforts/**/*
+01_Collect_Inflow/**/*
+02_Organize_Sandbox/**/*
+03_Reflect_Curated/**/*
+04_Execute_Efforts/**/*
+_Archived/**/*
 
 # ------------------------------------------------------------------------------
 # 4. WHITELIST: WHAT WE ACTUALLY TRACK
@@ -45,10 +46,15 @@ Thumbs.db
 !00_Protocol/
 !00_Protocol/**/*
 
+# Track brand context samples (not actual brand files)
+!04_Execute_Efforts/.brand/context.sample.md
+
 # ------------------------------------------------------------------------------
-# 5. AGENT & HARDWARE LOCAL CONFIG
+# 5. LOCAL CONFIGURATION (never committed)
 # ------------------------------------------------------------------------------
-# Keep the template manifest, but ignore local overrides or secrets
+# Your actual opencode.json has real model IDs and endpoints.
+# Use opencode.json.sample as a starting template.
 opencode.json
 .env
 local_config.yaml
+*.secret

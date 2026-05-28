@@ -1,92 +1,158 @@
 # Perceptiosphere (P-Sphere)
 
-Perceptiosphere means the nested, concentric sphere of context around an entity, in which constitutes their unique perception of the informational world. This starter-kit is a AI-native cognitive operating system developed by Francis Wang in his doctoral research. 
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/Content-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![License: MIT](https://img.shields.io/badge/Config-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Using the **CORE** (Collect, Organize, Reflect, Execute) process, the P-Sphere allows a human operator to manage high-velocity information through a teamed approach of AI agents, forming Hybrid Intelligence (HI) teams.
+An **AI-native cognitive operating system** for managing high-velocity information through teamed AI agents, forming Hybrid Intelligence (HI) partnerships.
 
-This repository serves as the "bootloader" for your personal intelligence stack. It manages the transition from raw environmental noise to structured, sovereign knowledge.
+The Perceptiosphere is built for domain experts who require a sovereign, structured method for transforming environmental noise into actionable knowledge. It rejects the passivity of standard AI tools in favour of an active, agent-driven approach to personal knowledge management.
+
+---
 
 ## The CORE Methodology
 
-The P-Sphere functions as a metabolic process for cognition. Information moves through four primary phases:
+The P-Sphere functions as a metabolic process for cognition. Information moves through four phases:
 
-1. **Collect:** Ingesting raw signals from the environment.
-2. **Organize:** Clustering and synthesizing data within a sandbox environment.
-3. **Reflect:** Curating and promoting validated insights into a permanent knowledge mesh.
-4. **Execute:** Transforming reflected knowledge into tangible outputs and projects.
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   COLLECT   │───▶│  ORGANIZE   │───▶│   REFLECT   │───▶│   EXECUTE   │
+│  (Inflow)   │    │  (Sandbox)  │    │  (Curated)  │    │  (Efforts)  │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+  Raw signals       AI decomposition    Human curation     Projects &
+  from environment  into atoms          into knowledge     outputs
+                                        mesh
+```
+
+1. **Collect** — Ingest raw signals: articles, transcripts, voice notes, web clips, RSS feeds
+2. **Organize** — AI agents decompose material into semantic atoms using the ACCESS taxonomy
+3. **Reflect** — Human operator curates validated insights into a permanent knowledge mesh
+4. **Execute** — Transform reflected knowledge into projects, publications, and decisions
+
+---
+
+## The ACCESS Taxonomy
+
+Knowledge atoms are classified into six categories:
+
+| Category | Description | Folder |
+|----------|-------------|--------|
+| **A**rtifacts | Finalized outputs, drafts, deliverables | `Artifacts/` |
+| **C**ards | Atomic concepts, patterns, and claims | `Cards/` |
+| **C**alendar | Time-bound events, meetings, decisions | `Calendar/` |
+| **E**cosystem | People, organizations, and roles | `Ecosystem/` |
+| **S**ources | Citation records with credibility tiers | `Sources/` |
+| **S**paces | Maps of Content (MOCs), dashboards | `Spaces/` |
+
+Sources are further tiered by credibility:
+- **T1 Primary** — Original research, patents, raw data
+- **T2 Authoritative** — Peer-reviewed, established publishers
+- **T3 Professional** — Industry reports, expert blogs, conference talks
+- **T4 Signal** — Social media, news, AI-generated summaries
+
+---
+
+## Multi-Agent Architecture
+
+The P-Sphere uses a **Chief of Staff (COS)** orchestrator that delegates to specialist subagents:
+
+```
+                    ┌──────────────────┐
+                    │  Chief of Staff  │  (Tier 1 — Reasoning)
+                    │   Orchestrator   │
+                    └────────┬─────────┘
+                             │
+         ┌───────────────────┼───────────────────┐
+         │                   │                   │
+    ┌────▼────┐       ┌─────▼─────┐      ┌─────▼─────┐
+    │ Team 1  │       │  Team 2   │      │  Team 3   │
+    │Knowledge│       │Operations │      │  Output   │
+    │  Core   │       │ Support   │      │ Research  │
+    └────┬────┘       └─────┬─────┘      └─────┬─────┘
+         │                  │                   │
+    Librarian          Transcript          Writer
+    Researcher         Journal             Critic
+    Reflector          Privacy             Strategist
+                                           Coder
+```
+
+### Model Tiers
+
+The system assigns models by cognitive cost:
+
+| Tier | Use Case | Example Models |
+|------|----------|----------------|
+| **Tier 1** | Reasoning, planning, orchestration ONLY | Claude Opus, GPT-4o |
+| **Tier 2** | Writing, research, analysis, review | Claude Sonnet, Qwen3 80B |
+| **Tier 2C** | Code generation ONLY | Qwen3 Coder, Claude Sonnet |
+| **Tier 2.5** | Light structured tasks, fast navigation | Qwen3 32B, Gemini Flash |
+| **Tier 3** | Scanning, metadata, formatting | GPT-4o-mini, small open models |
 
 ---
 
 ## Repository Structure
 
-The P-Sphere utilizes a flattened folder hierarchy to maintain agility while enforcing the CORE workflow.
+```
+perceptiosphere/
+├── 00_Protocol/                 ← System blueprint (tracked by Git)
+│   ├── Agents/prompts/          Agent system prompts
+│   ├── Schema/                  Knowledge taxonomy definitions
+│   ├── Templates/               Obsidian frontmatter templates
+│   ├── Research/                Research dispatch templates
+│   └── Rituals/                 Daily/weekly workflow protocols
+│
+├── 01_Collect_Inflow/           ← Raw inputs (NOT tracked)
+│   ├── Inbox/                   Web clips, articles, PDFs
+│   ├── AI_Research/             AI-generated research reports
+│   └── Journal/                 Voice notes, daily reflections
+│
+├── 02_Organize_Sandbox/         ← AI-decomposed atoms (NOT tracked)
+│   ├── Cards/                   Concepts, patterns, claims
+│   ├── Sources/                 Citation records (T1-T4)
+│   ├── Ecosystem/               People, orgs, roles
+│   ├── Calendar/                Meetings, events
+│   ├── Artifacts/               Drafts, outputs
+│   └── Spaces/                  MOCs, dashboards
+│
+├── 03_Reflect_Curated/          ← Validated knowledge (NOT tracked)
+│   ├── Sovereign/               Private deep-context knowledge
+│   └── Collective/              Shared/federated knowledge
+│
+├── 04_Execute_Efforts/          ← Active projects (NOT tracked)
+│   └── .brand/                  Brand context files for each org
+│
+├── _Archived/Raws/              ← Processed originals (NOT tracked)
+│
+├── AGENTS.md                    Living agent registry
+├── opencode.json                Your local config (from .sample)
+├── opencode.json.sample         Annotated starter config
+└── .gitignore                   Structure-only tracking firewall
+```
 
-### `00_Protocol`
-
-The Blueprint. This is the only folder fully tracked by Git. It contains the instructions, design guidelines, and agent definitions that govern the system.
-
-* **Agent Definitions:** System prompts for the Chief of Staff and specialized sub-agents.
-* **Schemas:** Neo4j ontology and GraphRAG metadata standards.
-* **Templates:** Obsidian frontmatter and Map of Content (MOC) structures.
-
-### `01_Inflow`
-
-The Sensorium. This is the high-entropy landing zone for all raw data.
-
-* **Inputs:** Plaud audio transcripts, RSS feeds from Inoreader, and web clips.
-* **Process:** Agents scan this folder for signals to move into the Sandbox.
-
-### `02_Sandbox`
-
-The Cognitive Sandbox. This is an AI-assisted R&D lab.
-
-* **Function:** An unreviewed wiki where research agents dump initial findings.
-* **Usage:** Use this space to bounce ideas off an "AI Consultant" and stress-test concepts before they reach the curated mesh.
-
-### `03_Curated`
-
-The Knowledge Mesh. This is the heart of the P-Sphere. It uses embeddings and Neo4j for GraphRAG.
-
-* **Sovereign (SKMesh):** Private, deep-context knowledge. It remains local and is never tracked by Git.
-* **Collective (CKMesh):** Federated knowledge shared with the community. This folder syncs with collaborators like Tao or James.
-
-### `04_Ecosystem`
-
-The Relational Graph. This domain maps the social and professional dependencies of your work.
-
-* **Mapping:** Tracks Persona, Entities, and Roles. It provides the necessary social context for agentic reasoning.
-
-### `05_Artifacts`
-
-The Forge. This is the home for finalized intellectual property.
-
-* **Outputs:** Refined manuscripts, validated reports, and published documentation.
-
-### `06_Efforts`
-
-The Operations Room. This folder tracks active work and physical projects.
-
-* **Action:** Manages project states such as Active, Parked, or Scheduled. It is where **OpenCode** and **OpenWork** agents execute specific tasks.
-
----
-
-## Technical Infrastructure
-
-### Agent Orchestration
-
-The system utilizes a **Chief of Staff (CoS)** agent as a strategic partner. The CoS manages the cognitive load by directing specialized sub-agents (Coder, Researcher, Ghostwriter) based on the instructions found in `00_Protocol`.
-
-### GraphRAG and Sovereign Intelligence
-
-The `03_Curated` folder is encoded with local embeddings. This allows the AI team to perform complex retrievals that combine semantic search with relational graph traversals. By keeping the **SKMesh** on local hardware (such as a Mac Mini cluster), the operator maintains a private intellectual advantage.
+**Git tracks only the Protocol layer** — your knowledge content stays local and sovereign.
 
 ---
 
 ## Getting Started
 
-1. **Clone the Repo:** Initialize your local P-Sphere directory.
-2. **Configure Agents:** Update the `opencode.json` at the root to point to your local LLM endpoints.
-3. **Boot the System:** Point Obsidian to the root folder to begin the CORE cycle.
-4. **Structured Reflection:** Set a recurring cadence to move notes from `02_Sandbox` to `03_Curated`.
+See **[SETUP.md](./SETUP.md)** for the full installation and configuration guide.
 
-The Perceptiosphere is built for those who excel in their domain and require a clear, direct, and sovereign method for managing complexity. It rejects the artificial neutrality of standard AI tools in favor of a vigorous, active-voice approach to personal knowledge management.
+Quick start:
+1. Clone or fork this repository
+2. Copy `opencode.json.sample` → `opencode.json` and fill in your model endpoints
+3. Point Obsidian at the root folder
+4. Start the CORE cycle: drop material into `01_Collect_Inflow/Inbox/` and invoke the Librarian
+
+---
+
+## Licence
+
+- **Content** (prompts, schemas, templates, documentation): [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- **Configuration and code**: [MIT](https://opensource.org/licenses/MIT)
+
+See [LICENSE](./LICENSE) for full details.
+
+---
+
+## Origin
+
+The Perceptiosphere was developed by [Francis Wang](https://fcwang.com) as part of doctoral research into hybrid intelligence and the future of knowledge work. It is maintained as an open framework through [FW.VISION](https://fw.vision).

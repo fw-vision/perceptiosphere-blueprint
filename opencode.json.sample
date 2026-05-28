@@ -1,0 +1,154 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // ─── LLM PROVIDER ─────────────────────────────────────────────────────────
+  // The P-Sphere uses a tiered model strategy routed through a local proxy.
+  // Replace placeholders with your actual provider and model identifiers.
+  //
+  // Recommended proxy: LiteLLM (https://github.com/BerriAI/litellm)
+  // Alternatives: any OpenAI-compatible API endpoint
+  // ──────────────────────────────────────────────────────────────────────────
+
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM",
+      "options": {
+        "baseURL": "{{LLM_PROXY_BASE_URL}}"
+      },
+      "models": {
+        "{{TIER_1_MODEL_ID}}": {
+          "name": "Tier 1 (Reasoning/Planning Only)"
+        },
+        "{{TIER_2_MODEL_ID}}": {
+          "name": "Tier 2 (General Writing/Research)"
+        },
+        "{{TIER_2C_MODEL_ID}}": {
+          "name": "Tier 2C (Code Generation Only)"
+        },
+        "{{TIER_2_5_MODEL_ID}}": {
+          "name": "Tier 2.5 (Light Structured Tasks)"
+        },
+        "{{TIER_3_MODEL_ID}}": {
+          "name": "Tier 3 (Fast Scanning/Formatting)"
+        }
+      }
+    }
+  },
+
+  // ─── MODEL ASSIGNMENTS ─────────────────────────────────────────────────────
+  // Primary model: handles the main conversation (COS orchestrator)
+  // Small model: used for lightweight background tasks
+  // ──────────────────────────────────────────────────────────────────────────
+
+  "model": "litellm/{{TIER_1_MODEL_ID}}",
+  "small_model": "litellm/{{TIER_3_MODEL_ID}}",
+
+  // ─── AGENT DEFINITIONS ─────────────────────────────────────────────────────
+  // The P-Sphere uses a multi-agent architecture with:
+  //   - Primary agents: directly handle user conversations
+  //   - Subagents: delegated to by primary agents for specific tasks
+  //
+  // Tier Philosophy:
+  //   Tier 1 — Expensive, high-reasoning. For planning, orchestration ONLY.
+  //   Tier 2 — Mid-cost. For writing, research, analysis, review.
+  //   Tier 2C — Code-specialized variant of Tier 2.
+  //   Tier 2.5 — Low-cost. For structured extraction, fast navigation.
+  //   Tier 3 — Cheapest. For scanning, metadata, formatting.
+  // ──────────────────────────────────────────────────────────────────────────
+
+  "agent": {
+    "reasoning": {
+      "mode": "primary",
+      "model": "litellm/{{TIER_1_MODEL_ID}}",
+      "prompt": "{file:./00_Protocol/Agents/prompts/cos.md}",
+      "permission": {
+        "task": {
+          "*": "deny",
+          "librarian": "allow",
+          "researcher": "allow",
+          "reflector": "allow",
+          "critic": "allow",
+          "writer": "allow",
+          "strategist": "allow",
+          "coder": "allow",
+          "transcript": "allow",
+          "privacy": "allow",
+          "journal": "allow",
+          "explore": "allow",
+          "general-gpt": "allow"
+        }
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "litellm/{{TIER_1_MODEL_ID}}",
+      "temperature": 0.2,
+      "prompt": "{file:./00_Protocol/Agents/prompts/cos.md}"
+    },
+    "build": {
+      "mode": "primary",
+      "model": "litellm/{{TIER_2C_MODEL_ID}}"
+    },
+
+    // ─── KNOWLEDGE CORE (Team 1) ──────────────────────────────────────────
+    "librarian": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}",
+      "prompt": "{file:./00_Protocol/Agents/prompts/librarian.md}"
+    },
+    "researcher": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}",
+      "prompt": "{file:./00_Protocol/Agents/prompts/discovery-researcher.md}"
+    },
+    "reflector": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}",
+      "prompt": "{file:./00_Protocol/Agents/prompts/structural-reflector.md}"
+    },
+
+    // ─── OPERATIONS SUPPORT (Team 2) ──────────────────────────────────────
+    "transcript": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_5_MODEL_ID}}"
+    },
+    "journal": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_5_MODEL_ID}}"
+    },
+    "privacy": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_3_MODEL_ID}}"
+    },
+
+    // ─── RESEARCH & CONTENT OUTPUT (Team 3) ───────────────────────────────
+    "critic": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}"
+    },
+    "writer": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}",
+      "prompt": "{file:./00_Protocol/Agents/prompts/content-writer.md}"
+    },
+    "strategist": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_MODEL_ID}}"
+    },
+    "coder": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2C_MODEL_ID}}"
+    },
+
+    // ─── UTILITY ──────────────────────────────────────────────────────────
+    "explore": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_2_5_MODEL_ID}}"
+    },
+    "general-gpt": {
+      "mode": "subagent",
+      "model": "litellm/{{TIER_3_MODEL_ID}}"
+    }
+  }
+}
