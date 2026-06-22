@@ -98,7 +98,7 @@ Edit `00_Protocol/Agents/prompts/cos.md`:
 
 1. Replace `{{PRINCIPAL_NAME}}` with your name
 2. Fill in the Organizations Under Management table with your projects/brands
-3. Update the `.brand/context.md` paths to match your organizations
+3. Update the `.brand/context.md` paths to match your organisations
 
 ---
 
@@ -108,7 +108,7 @@ If you manage multiple projects or brands, create a context file for each:
 
 ```bash
 # Example: create a brand context
-cp 04_Execute_Efforts/.brand/context.sample.md 04_Execute_Efforts/.brand/my-project.context.md
+cp 04_Efforts/.brand/context.sample.md 04_Efforts/.brand/my-project.context.md
 ```
 
 Edit the context file with your brand's voice, audience, and constraints.
@@ -124,24 +124,10 @@ opencode
 # Test the COS agent responds
 > What agents are available?
 
-# Test the Librarian by dropping a file into Inbox
-# Copy any article/PDF into 01_Collect_Inflow/Inbox/
+# Test by dropping a file into Inbox
+# Copy any article/PDF into 01_Inflow/Inbox/
 > Process the inbox
 ```
-
----
-
-## Step 7: Establish Your Rituals
-
-The P-Sphere includes three ritual protocols in `00_Protocol/Rituals/`:
-
-| Ritual | Frequency | Purpose |
-|--------|-----------|---------|
-| Morning Planning | Daily | Assess load, prioritize tasks, set intentions |
-| Evening Shutdown | Daily | Archive completed work, flag tomorrow's priorities |
-| Weekly Review | Weekly | Promote sandbox atoms, identify patterns, adjust strategy |
-
-These reference a generic `{{TASK_MANAGER}}` — replace with your tool (Sunsama, Todoist, Things, etc.) or remove the integration steps entirely.
 
 ---
 
@@ -155,7 +141,7 @@ These reference a generic `{{TASK_MANAGER}}` — replace with your tool (Sunsama
 
 ### What stays local (never committed)
 - `opencode.json` — Your actual config with real endpoints
-- `01_Collect_Inflow/` through `04_Execute_Efforts/` — All knowledge content
+- `01_Inflow/` through `04_Efforts/` — All knowledge content
 - `_Archived/` — Processed raw materials
 - `.env`, secrets, local overrides
 
@@ -195,14 +181,14 @@ Your content folders are gitignored, so merges will never touch your knowledge.
 |-------|----------|
 | "Model not found" errors | Verify your proxy is running and model IDs match exactly |
 | Agents don't delegate | Check `opencode.json` permission block — subagents must be listed |
-| Librarian creates wrong folder structure | Ensure `02_Organize_Sandbox/` subfolders exist (check `.keep` files) |
-| Git tracking content files | Run `git rm --cached -r 01_Collect_Inflow/` then commit |
+| Wrong folder structure | Ensure `02_Sandbox/` subfolders exist (check `.keep` files) |
+| Git tracking content files | Run `git rm --cached -r 01_Inflow/` then commit |
 
 ---
 
 ## Next Steps
 
-1. **Read `AGENTS.md`** to understand the full agent roster and workflows
-2. **Explore `00_Protocol/Schema/access-atoms.md`** for the complete taxonomy
+1. **Read `AGENTS.md`** to understand the agent registry and how to expand your fleet
+2. **Explore `00_Protocol/Schema/access-atoms.md`** for the complete taxonomy and credibility system
 3. **Customize templates** in `00_Protocol/Templates/` for your domain
 4. **Start collecting** — the system activates when material flows in

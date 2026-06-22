@@ -1,9 +1,8 @@
 # Agents — Perceptiosphere Registry
 
-> This is the living index of all agents available in this Perceptiosphere instance. It maps each agent to its functional unit, model tier, prompt file, and current implementation status.
+> This is the living index of all agents in your Perceptiosphere instance. Start with the two included agents, then expand the fleet as your needs evolve using the FORGE process.
 >
-> **Maintained by:** Chief of Staff (COS)  
-> **Architecture plan:** See `docs/plans/` for implementation notes
+> **Maintained by:** Chief of Staff (COS)
 
 ---
 
@@ -11,104 +10,65 @@
 
 | Tier | Use Case | Cost Profile |
 |------|----------|-------------|
-| **Tier 1** | Reasoning, planning, orchestration ONLY. Never for heavy writing/reading. | High |
-| **Tier 2** | General writing, research, analysis, review, prose output | Low-Medium |
-| **Tier 2C** | Code generation ONLY | Low-Medium |
-| **Tier 2.5** | Light structured tasks, fast navigation, extraction | Low |
-| **Tier 3** | Fast scanning, metadata, formatting | Lowest |
+| **Tier 1** | Reasoning, planning, orchestration ONLY | High (use sparingly) |
+| **Tier 2** | Writing, research, analysis, review | Medium |
+| **Tier 2C** | Code generation ONLY | Medium |
+| **Tier 3** | Scanning, metadata, formatting | Low |
 
 ---
 
-## Team 1: Knowledge Core
+## Included Agents
 
-> The foundational agents that power the CORE metabolic cycle (Collect, Organize, Reflect, Execute).
+| Agent | Subagent Key | Tier | Prompt | Role |
+|-------|-------------|------|--------|------|
+| **Chief of Staff (COS)** | `reasoning` / `plan` | 1 | `00_Protocol/Agents/prompts/cos.md` | Orchestrator: delegates, synthesises, tracks credibility |
+| **Researcher** | `researcher` | 2 | `00_Protocol/Agents/prompts/researcher.md` | External research with proper source filing and credibility tiers |
 
-| Agent | Subagent Key | Tier | Prompt | Status |
-|-------|-------------|------|--------|--------|
-| **Chief of Staff (COS)** | `reasoning` / `plan` | 1 | `00_Protocol/Agents/prompts/cos.md` | Active |
-| **Librarian** | `librarian` | 2 | `00_Protocol/Agents/prompts/librarian.md` | Active |
-| **Discovery Researcher** | `researcher` | 2 | `00_Protocol/Agents/prompts/discovery-researcher.md` | Active |
-| **Structural Reflector** | `reflector` | 2 | `00_Protocol/Agents/prompts/structural-reflector.md` | Active |
+### Core Workflows
 
-### Workflows
-
-- **Ingestion Loop:** `01_Inflow/Inbox/` or `01_Inflow/AI_Research/` → Librarian detects source type → decomposes into `02_Sandbox/` (ACCESS atoms) → files Source note in `Sources/{T1_Primary|T2_Authoritative|T3_Professional|T4_Signal}/` → archives original to `_Archived/Raws/`
-- **Source Enrichment Loop:** Librarian creates stub Sources (`status: stub`, `enrichment_needed: true`) → COS batches enrichment requests → Researcher fills metadata (DOI, ISBN, URL, publisher) → status promoted to `seed`
-- **Research Loop:** COS scopes brief → Researcher dispatched → Report in `01_Inflow/AI_Research/` → Librarian processes as `ai-synthesis` + traces upstream primary sources
-- **Reflection Loop:** Reflector scans `02_Sandbox/` → Curation proposals → Principal approves → `03_Curated/`
-- **Meta Loop (Agents Building Agents):** Researcher investigates role → Librarian decomposes → COS drafts new prompt → Principal approves
+- **Research Loop:** COS scopes brief → Researcher dispatched → Report in `01_Inflow/AI_Research/` → COS processes findings into Sandbox atoms
+- **Credibility Loop:** COS tracks `principal_reviews` when you validate notes; Sources increment `source_citations` on referenced Cards
+- **Promotion Loop:** COS identifies high-credibility collective-worthy notes → recommends Curated promotion → you approve
 
 ---
 
-## Team 2: Operations Support
+## Expanding Your Fleet
 
-> Daily operations, transcript processing, and security agents.
+The Perceptiosphere is designed for fleet growth. When you identify a recurring task that should be delegated:
 
-| Agent | Subagent Key | Tier | Prompt | Status |
-|-------|-------------|------|--------|--------|
-| **Executive Assistant (EA)** | — | 2.5 | `00_Protocol/Agents/prompts/executive-assistant.md` | Planned |
-| **Daily Journal** | `journal` | 2.5 | `00_Protocol/Agents/prompts/daily-journal.md` | Planned |
-| **Transcript Analyst** | `transcript` | 2.5 | `00_Protocol/Agents/prompts/transcript-analyst.md` | Planned |
-| **Privacy Auditor** | `privacy` | 3 | `00_Protocol/Agents/prompts/privacy-auditor.md` | Planned |
+1. **Flag** the need (FORGE: F)
+2. **Orient** by checking if an existing agent could handle it (FORGE: O)
+3. **Refine** a new prompt in `00_Protocol/Agents/prompts/` (FORGE: R)
+4. **Gate** — review and approve the new agent (FORGE: G)
+5. **Execute** — add it to this registry and your `opencode.json` (FORGE: E)
 
-### Workflows
+### Common Agents to Add
 
-- **Meeting Flow:** Recording → Transcript Analyst extracts decisions/actions → EA populates calendar + tasks
-- **Journal Flow:** Voice notes → Daily Journal synthesizes → deposits in `01_Inflow/` → Librarian processes
-- **Privacy Flow:** Privacy Auditor scans `02_Sandbox/` → flags PII → redacts before Collective sync
-
----
-
-## Team 3: Research & Content Output
-
-> Content creation, critique, and technical implementation agents.
-
-| Agent | Subagent Key | Tier | Prompt | Status |
-|-------|-------------|------|--------|--------|
-| **Review Critic** | `critic` | 2 | `00_Protocol/Agents/prompts/review-critic.md` | Planned |
-| **Content Strategist** | `strategist` | 2 | `00_Protocol/Agents/prompts/content-strategist.md` | Planned |
-| **Content Writer** | `writer` | 2 | `00_Protocol/Agents/prompts/content-writer.md` | Active |
-| **SEO/AEO Specialist** | — | 3 | `00_Protocol/Agents/prompts/seo-specialist.md` | Planned |
-| **Software Architect** | — | 1 | `00_Protocol/Agents/prompts/software-architect.md` | Planned |
-| **Coder** | `coder` | 2C | `00_Protocol/Agents/prompts/coder.md` | Active |
-
-### Workflows
-
-- **Content Flow:** COS loads `.brand/context.md` → Strategist plans → Writer drafts → Critic reviews → Principal approves
-- **Code Flow:** Software Architect plans → Coder implements → tests pass → Principal reviews
-
----
-
-## Team 4: Governance & Strategy
-
-> Specialized domain agents for foresight, policy, and brand governance.
-
-| Agent | Subagent Key | Tier | Prompt | Status |
-|-------|-------------|------|--------|--------|
-| **Foresight Analyst** | — | 1 | `00_Protocol/Agents/prompts/foresight-analyst.md` | Planned |
-| **Policy Advisor** | — | 1 | `00_Protocol/Agents/prompts/policy-advisor.md` | Planned |
-| **Brand Guardian** | — | 2 | `00_Protocol/Agents/prompts/brand-guardian.md` | Planned |
-
-### Workflows
-
-- **Foresight Flow:** COS briefs → Foresight Analyst applies futures methodology → scenario outputs → Librarian decomposes
-- **Brand Audit Flow:** Brand Guardian scans recent content → drift report → COS flags for Principal
+| Agent | Role | When to Add |
+|-------|------|-------------|
+| **Librarian** | Decomposes raw input into ACCESS atoms | When you have consistent inflow to process |
+| **Reflector** | Identifies patterns and promotion candidates | When your Sandbox has 50+ atoms |
+| **Writer** | Creates content from knowledge atoms | When you publish regularly |
+| **Critic** | Reviews and improves drafts | When quality matters for external output |
+| **Transcript Analyst** | Processes meeting recordings | When you record meetings |
+| **Journal** | Synthesises voice notes | When you use voice capture |
+| **Privacy Auditor** | Scans for PII before sharing | When you share knowledge externally |
+| **Coder** | Implements technical projects | When you build software |
 
 ---
 
 ## Brand Contexts
 
-> Agents load brand voice dynamically via `.brand/context.md` files stored with each organization.
+Agents load brand voice dynamically via `.brand/context.md` files:
 
-| Organization | Path | Domain |
+| Organisation | Path | Domain |
 |-------------|------|--------|
-| {{ORG_1}} | `04_Execute_Efforts/{{ORG_1}}/.brand/context.md` | {{description}} |
-| {{ORG_2}} | `04_Execute_Efforts/{{ORG_2}}/.brand/context.md` | {{description}} |
+| {{ORG_1}} | `04_Efforts/{{ORG_1}}/.brand/context.md` | {{description}} |
 
 <!--
-  Replace the table above with YOUR organizations.
+  Replace the table above with YOUR organisations.
   Each org should have a .brand/context.md file.
-  See 04_Execute_Efforts/.brand/context.sample.md for the template.
+  See 04_Efforts/.brand/context.sample.md for the template.
 -->
 
 ---
@@ -118,33 +78,4 @@
 - **Master config:** `./opencode.json` (created from `opencode.json.sample`)
 - **Prompt directory:** `00_Protocol/Agents/prompts/`
 - **Template directory:** `00_Protocol/Templates/`
-- **Research directory:** `00_Protocol/Research/` (Output-Templates/ + Investigation-Prompts/)
 - **Schema directory:** `00_Protocol/Schema/`
-
----
-
-## Workspace Layout
-
-> The Perceptiosphere vault is an Obsidian vault. Code repositories can live as **sibling folders** in the same parent directory, each with their own git history.
-
-```
-~/work/                              (or your preferred workspace root)
-├── my-perceptiosphere/              ← This vault
-│   ├── 00_Protocol/                 System blueprints, agents, schemas
-│   ├── 01_Collect_Inflow/           Raw inputs (Inbox, Clips, Journal, AI_Research)
-│   ├── 02_Organize_Sandbox/         AI-decomposed atoms (ACCESS)
-│   ├── 03_Reflect_Curated/          Validated knowledge mesh
-│   ├── 04_Execute_Efforts/          Brand contexts and effort plans
-│   ├── _Archived/                   Processed raw files
-│   └── .obsidian/                   Vault config
-│
-├── my-project-a/                    ← Git repo: project A
-├── my-project-b/                    ← Git repo: project B
-└── experiments/                     ← Git repo: sandbox projects
-```
-
-### Convention for Agents
-
-- **Brand context:** `04_Execute_Efforts/{ORGNAME}/.brand/context.md` (inside vault)
-- **Code repos:** `../{ORGNAME}/` relative to vault root (sibling folder)
-- **Inflow sources:** `01_Collect_Inflow/Inbox/` (web clips), `01_Collect_Inflow/Journal/` (voice notes)

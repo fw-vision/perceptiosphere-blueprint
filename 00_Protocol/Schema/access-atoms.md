@@ -1,14 +1,19 @@
 # ACCESS — Knowledge Atom Taxonomy
 
 > **Origin:** Perceptiosphere Architecture  
-> **Version:** 2.0 (revised 2026-05-17)  
+> **Version:** 3.0 (revised 2026-06-21)  
 > **Purpose:** Defines the six categories for organizing semantic atoms in the Sandbox and Curated Mesh.
 
 ---
 
 ## Overview
 
-**ACCESS** is the taxonomic framework for classifying knowledge atoms within the Perceptiosphere. Every piece of decomposed information is filed into one of six categories, each with its own subfolder in `02_Organize_Sandbox/` and `03_Reflect_Curated/`.
+**ACCESS** is the taxonomic framework for classifying knowledge atoms within the Perceptiosphere. Every piece of decomposed information is filed into one of six categories, each with its own subfolder in `02_Sandbox/` and `03_Curated/`.
+
+The two zones serve different purposes:
+
+- **`02_Sandbox/`** — AI-autonomous working knowledge. All credibility levels coexist here. Agents create and modify freely. This is the cognitive workspace where ideas develop, get cross-referenced, and accumulate credibility over time.
+- **`03_Curated/`** — Collective published knowledge mesh. Content here is curated for external sharing and community consumption. Promotion from Sandbox to Curated is a conscious decision.
 
 Files use **wiki article titles** as filenames (e.g., `Compounding Content Systems.md`) for natural Obsidian linking. Classification lives in frontmatter — never in the filename.
 
@@ -80,22 +85,65 @@ Cards (`type: atom`) are further classified by `subtype`:
 
 ## Status Lifecycle
 
-The **physical folder location** is the primary permission boundary. The `status` field is confirmatory.
+The **physical folder location** determines the access boundary. The `status` field is confirmatory. The **credibility system** tracks knowledge maturity within Sandbox independently of promotion to Curated.
 
 ```
-02_Organize_Sandbox/  →  AI autonomous zone (agents create/modify freely)
-03_Reflect_Curated/   →  Human-in-the-loop zone (Principal approves all)
+02_Sandbox/  →  AI autonomous zone (agents create/modify freely; all credibility levels)
+03_Curated/  →  Collective published mesh (Principal approves promotion; for external sharing)
 ```
 
 | Status | Meaning | Expected Location |
 |--------|---------|-------------------|
-| `private` | Never visible, internal only | Either |
-| `stub` | Placeholder — needs Researcher enrichment (Sources only) | 02_Sandbox |
-| `seed` | Newly created, raw (default for Librarian output) | 02_Sandbox |
-| `wip` | Being developed or enriched | 02_Sandbox |
-| `ready` | Reviewed, awaiting promotion to Curated | 02_Sandbox |
-| `published` | Live in Curated mesh (or on website) | 03_Curated |
-| `unlisted` | Accessible but hidden from indexes | 03_Curated |
+| `private` | Never visible, internal only | Sandbox |
+| `stub` | Placeholder — needs Researcher enrichment (Sources only) | Sandbox |
+| `seed` | Newly created, raw (default for agent output) | Sandbox |
+| `wip` | Being developed or enriched | Sandbox |
+| `ready` | Reviewed, high credibility, available for Curated promotion | Sandbox |
+| `published` | Live in Curated mesh for collective consumption | Curated |
+| `unlisted` | Accessible but hidden from public indexes | Either |
+
+**Key principle:** A note can reach `canonical` credibility level in Sandbox without ever being promoted to Curated. Credibility measures knowledge quality; promotion to Curated is a separate decision about whether that knowledge is suitable for collective sharing.
+
+---
+
+## Credibility Scoring System
+
+The credibility system tracks knowledge quality as a **computed score** based on three signal types, weighted by authority. This lets you use AI agents to expand your cognitive reach while maintaining clear trust signals.
+
+### Credibility Fields (ordered by decreasing authority weight)
+
+```yaml
+credibility:
+  principal_reviews: 0      # Active human validations (weight: 5x)
+  source_citations: 0       # Cross-references from Source atoms or external publications (weight: 3x)
+  agent_validations: 0      # Cross-validation events by agents (weight: 1x)
+  level: seed               # Auto-computed from weighted score
+```
+
+### Level Computation
+
+```
+score = (principal_reviews x 5) + (source_citations x 3) + (agent_validations x 1)
+```
+
+| Score Range | Level | Meaning |
+|-------------|-------|---------|
+| 0 | seed | Untouched since creation |
+| 1-4 | emerging | Some engagement, not yet reliable |
+| 5-14 | reviewed | Curator or sources have engaged meaningfully |
+| 15-29 | validated | Strong confidence; multiple signals converge |
+| 30+ | canonical | Foundational knowledge; heavily cited and reviewed |
+
+### When to Increment
+
+| Event | Field to Increment |
+|-------|-------------------|
+| You explicitly confirm/validate a note | `principal_reviews` |
+| A Source atom links to this Card | `source_citations` |
+| An external publication cites this concept | `source_citations` |
+| An agent cross-references this note in analysis | `agent_validations` |
+
+**Design principle:** Human judgment (5x) outweighs real-world citations (3x), which outweigh AI validation (1x). A single human review is worth as much as five agent cross-validations. This ensures the system scales your attention without diluting your authority.
 
 ---
 
@@ -230,7 +278,7 @@ Note: The Principal's own peer-reviewed papers get Tier 1. Own blog posts get Ti
 Sources are organized by credibility tier in physical subfolders. The `source_type` field captures format; the physical folder signals citation weight at a glance.
 
 ```
-02_Organize_Sandbox/Sources/
+02_Sandbox/Sources/
 ├── Sources.md          (Dataview index — queries all tiers)
 ├── T1_Primary/         (Tier 1: peer-reviewed papers, theses, datasets, standards)
 ├── T2_Authoritative/   (Tier 2: books, institutional reports, book chapters)
@@ -245,7 +293,7 @@ Sources are organized by credibility tier in physical subfolders. The `source_ty
 
 ### A — Artifacts
 
-**Location:** `02_Organize_Sandbox/Artifacts/` or `03_Reflect_Curated/*/Artifacts/`
+**Location:** `02_Sandbox/Artifacts/` or `03_Curated/*/Artifacts/`
 
 Significant intellectual output — substantial working documents, synthesized drafts, and polished deliverables. Artifacts are "compound" — they reference multiple Cards and Sources.
 
@@ -257,7 +305,7 @@ Significant intellectual output — substantial working documents, synthesized d
 
 ### C — Calendar
 
-**Location:** `02_Organize_Sandbox/Calendar/` or `03_Reflect_Curated/*/Calendar/`
+**Location:** `02_Sandbox/Calendar/` or `03_Curated/*/Calendar/`
 
 Time-bound data — events, milestones, meetings, deadlines, and temporal markers. Calendar entries use date-prefixed filenames for natural chronological ordering within the flat folder.
 
@@ -291,7 +339,7 @@ plaud_id: "abc123..."              # Plaud recording ID (for meetings from Plaud
 
 ### C — Cards
 
-**Location:** `02_Organize_Sandbox/Cards/` or `03_Reflect_Curated/*/Cards/`
+**Location:** `02_Sandbox/Cards/` or `03_Curated/*/Cards/`
 
 Atomic units of thought — the smallest meaningful unit of knowledge that can stand alone. Classified by `subtype` (see Card Subtypes table above).
 
@@ -303,7 +351,7 @@ Atomic units of thought — the smallest meaningful unit of knowledge that can s
 
 ### E — Ecosystem
 
-**Location:** `02_Organize_Sandbox/Ecosystem/{People|Organizations|Roles}/` or `03_Reflect_Curated/*/Ecosystem/{People|Organizations|Roles}/`
+**Location:** `02_Sandbox/Ecosystem/{People|Organizations|Roles}/` or `03_Curated/*/Ecosystem/{People|Organizations|Roles}/`
 
 Relational mapping — the people, organizations, and roles that constitute the knowledge landscape.
 
@@ -332,7 +380,7 @@ Ecosystem/
 
 ### S — Sources
 
-**Location:** `02_Organize_Sandbox/Sources/{T1_Primary|T2_Authoritative|T3_Professional|T4_Signal}/` or `03_Reflect_Curated/*/Sources/`
+**Location:** `02_Sandbox/Sources/{T1_Primary|T2_Authoritative|T3_Professional|T4_Signal}/` or `03_Curated/*/Sources/`
 
 Citation records — metadata about where knowledge came from. Every ingested source gets a Source atom serving as the provenance record. Sources are classified by `source_type`, assigned a `credibility_tier`, and filed into the subfolder matching their credibility level.
 
@@ -350,7 +398,7 @@ Citation records — metadata about where knowledge came from. Every ingested so
 
 ### S — Spaces
 
-**Location:** `02_Organize_Sandbox/Spaces/` or `03_Reflect_Curated/*/Spaces/`
+**Location:** `02_Sandbox/Spaces/` or `03_Curated/*/Spaces/`
 
 High-level orientation zones — Maps of Content (MOCs), area overviews, and navigational structures.
 
@@ -368,7 +416,7 @@ Each ACCESS subfolder contains a folder note (same name as folder, e.g., `Cards/
 
 ## Integration with External Publishing (Website/CMS)
 
-Notes that graduate from `03_Reflect_Curated/` to your website use:
+Notes that graduate from `03_Curated/` to your website use:
 - `output_type` field to determine collection routing (blog, essay, etc.)
 - `status: published` to appear in site listings
 - `publish_date` for display ordering

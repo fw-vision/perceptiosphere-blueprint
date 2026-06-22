@@ -28,10 +28,10 @@ Thumbs.db
 # Ignore all content in data folders by default.
 # These folders hold YOUR knowledge — they are never shared via Git.
 # ------------------------------------------------------------------------------
-01_Collect_Inflow/**/*
-02_Organize_Sandbox/**/*
-03_Reflect_Curated/**/*
-04_Execute_Efforts/**/*
+01_Inflow/**/*
+02_Sandbox/**/*
+03_Curated/**/*
+04_Efforts/**/*
 _Archived/**/*
 
 # ------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ _Archived/**/*
 !00_Protocol/**/*
 
 # Track brand context samples (not actual brand files)
-!04_Execute_Efforts/.brand/context.sample.md
+!04_Efforts/.brand/context.sample.md
 
 # ------------------------------------------------------------------------------
 # 5. LOCAL CONFIGURATION (never committed)
